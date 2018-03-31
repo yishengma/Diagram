@@ -19,11 +19,12 @@ import java.util.Map;
 public class DiagramAdapter extends RecyclerView.Adapter<DiagramAdapter.ViewHolder> {
     private int[] mHeight;
     private int[] mLows;
+    private int times ;
 
     public DiagramAdapter(int[] height, int[] low) {
         mHeight = height;
         mLows = low;
-
+        caculateTimes();
 
     }
 
@@ -40,23 +41,28 @@ public class DiagramAdapter extends RecyclerView.Adapter<DiagramAdapter.ViewHold
         int nextPosition = position + 1;
         switch (position) {
             case 0:
-                holder.mDiagramView.draws(mHeight[position], mLows[position], mHeight[nextPosition], mLows[nextPosition], 0);
+                holder.mDiagramView.draws(times*mHeight[position], times*mLows[position], times*mHeight[nextPosition], times*mLows[nextPosition], 0);
+                holder.itemView.setBackgroundResource(R.drawable.drawableBackground);
                 break;
             case 14:
-                holder.mDiagramView.draws(mHeight[prePosition], mLows[prePosition], mHeight[position], mLows[position], 2, true);
+                holder.mDiagramView.draws(times*mHeight[prePosition], times*mLows[prePosition], times*mHeight[position], times*mLows[position], 2, true);
+
                 break;
             default:
-                holder.mDiagramView.draws(mHeight[prePosition], mLows[prePosition], mHeight[position], mLows[position], mHeight[nextPosition], mLows[nextPosition], 1);
+                holder.mDiagramView.draws(times*mHeight[prePosition],times* mLows[prePosition],times* mHeight[position],times* mLows[position], times*mHeight[nextPosition], times*mLows[nextPosition], 1);
+
                 break;
 
         }
+        holder.mDiagramView.setText(mHeight[position],mLows[position]);
+
 
 
     }
 
     @Override
     public int getItemCount() {
-        return mHeight.length - 1;
+        return mHeight.length;
     }
 
 
@@ -66,6 +72,32 @@ public class DiagramAdapter extends RecyclerView.Adapter<DiagramAdapter.ViewHold
         public ViewHolder(View itemView) {
             super(itemView);
             mDiagramView = itemView.findViewById(R.id.dv);
+        }
+
+    }
+
+    private void caculateTimes(){
+        int max =mHeight[0];
+        int min = mLows[0];
+        for (int i=1;i<mHeight.length;i++){
+            if (mHeight[i]>max){
+                max = mHeight[i];
+            }
+            if (mHeight[i]<min){
+                min = mHeight[i];
+            }
+        }
+        int difference = max-min;
+        if (difference<=10&&difference>5){
+            times = 5;
+        }else if (difference<=5&&difference>=3){
+            times = 7;
+        }else if (difference<3){
+            times = 10;
+        }else if (difference>10&&difference<=13){
+            times = 3;
+        }else {
+            times = 1;
         }
 
     }

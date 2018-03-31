@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="50dp"
+    android:orientation="vertical"
+    android:layout_width="60dp"
     android:layout_height="400dp">
+    <View
+        android:layout_above="@+id/dv"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"/>
     <com.example.asus.diagram.DiagramView
         android:id="@+id/dv"
-        android:gravity="center_vertical"
-        android:layout_width="50dp"
-        android:layout_height="400dp" />
 
-</LinearLayout>
+        android:layout_centerVertical="true"
+        android:layout_width="60dp"
+        android:layout_height="200dp" />
+
+</RelativeLayout>

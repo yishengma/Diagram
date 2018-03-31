@@ -13,8 +13,7 @@ public class MainActivity extends AppCompatActivity {
    private int[] mHeightInts;
    private int[] mLowInts;
    private DiagramAdapter mDiagramAdapter;
-//    private DiagramListAdapter mAdapter;
-//    private HorizontalListView mListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,22 +29,17 @@ public class MainActivity extends AppCompatActivity {
         mDiagramRecyclerView.setAdapter(mDiagramAdapter);
         LinearLayoutManager manager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         mDiagramRecyclerView.setLayoutManager(manager);
-//        mListView = findViewById(R.id.rv_diagram);
-//        mAdapter = new DiagramListAdapter(this,R.layout.item_dailydata,mHeightInts,mLowInts);
-//        mListView.setAdapter(mAdapter);
-//        mListView.getChildAt(0);
+
 
 
     }
 
     private void initData(){
-        mHeightInts = new int[]{270,280,280,290,300,290,290,240,220,260,280,300,290,290,280};
-        mLowInts = new int[]   {200,190,200,210,210,220,160,170,140,160,190,200,200,210,180};
-        for (int i=0;i<mLowInts.length;i++){
-            mLowInts[i] = 800 - mLowInts[i];
-        }
-//        mHeightInts = new int[]{100,100,100,100,100,100,100,100,100,100,100,100,100,100};
-//        mLowInts = new int[]{600,600,600,600,600,600,600,600,600,600,600,600,600,600};
+        mHeightInts = new int[]{27,28,28,29,30,29,29,24,22,26,28,30,29,29,28};
+        mLowInts = new int[]{20,19,20,21,21,22,16,17,14,16,19,20,20,21,18};
+
 
     }
+
+
 }

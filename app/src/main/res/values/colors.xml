@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorDivider">#bababa</color>
+    <color name="colorLine">#b6b3b3</color>
+    <color name="colorTextBlack">#424242</color>
+    <drawable name="drawableBackground">#ebebeb</drawable>
+    <drawable name="drawableBackgroundWhite">#fdfdfe</drawable>
 </resources>
