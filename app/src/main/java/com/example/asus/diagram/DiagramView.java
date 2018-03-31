@@ -17,21 +17,25 @@ import android.widget.LinearLayout;
 public class DiagramView extends LinearLayout {
     private Paint mPaint;
     private Path mPath;
-    private int x = 0;
-    private int y = 0;
+    private int mNextHeightY;
+    private int mNextLowY;
     private int mHeightY;
     private int mLowY;
+    private int mPreHeightY;
+    private int mPreLowY;
     private static final int sFIRSTITEM = 0;
     private static final int sMEDIUMITEM = 1;
     private static final int sLASTITEM = 2;
-    private int mItemType ;
+    private boolean mIsDrawed = false;
+    private int mItemType;
     private static final String TAG = "DiagramView";
+
     public DiagramView(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public DiagramView(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
 
     }
 
@@ -44,53 +48,87 @@ public class DiagramView extends LinearLayout {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawCircle(getWidth()/2, mHeightY,2,mPaint);
-        canvas.drawCircle(getWidth()/2,mLowY,2,mPaint);
-        switch (mItemType){
-            case sFIRSTITEM :
-                mPath.moveTo(getWidth()/2,mHeightY);
-                mPath.lineTo(getWidth(),y);
 
-                mPath.moveTo(getWidth()/2,mLowY);
-                mPath.lineTo(getWidth(),y);
-                break;
-            case sMEDIUMITEM:
-                mPath.moveTo(0,mHeightY);
-                mPath.lineTo(getWidth()/2,y);
+            canvas.drawCircle(getWidth() / 2, mHeightY, 2, mPaint);
+            canvas.drawCircle(getWidth() / 2, mLowY, 2, mPaint);
+            switch (mItemType) {
+                case sFIRSTITEM:
+                    mPath.moveTo(getWidth() / 2, mHeightY);
+                    mPath.lineTo(getWidth(), (mHeightY + mNextHeightY) / 2);
 
-                mPath.moveTo(0,mLowY);
-                mPath.lineTo(getWidth()/2,y);
+                    mPath.moveTo(getWidth() / 2, mLowY);
+                    mPath.lineTo(getWidth(), (mNextLowY + mLowY) / 2);
 
 
-                mPath.moveTo(getWidth()/2,mHeightY);
-                mPath.lineTo(getWidth(),y);
+                    break;
 
-                mPath.moveTo(getWidth()/2,mLowY);
-                mPath.lineTo(getWidth(),y);
+                case sMEDIUMITEM:
+                    mPath.moveTo(0, (mPreHeightY+mHeightY)/2);
+                    mPath.lineTo(getWidth() / 2, mHeightY);
 
-                break;
-            case sLASTITEM:
-                mPath.moveTo(0,mHeightY);
-                mPath.lineTo(getWidth()/2,y);
+                    mPath.moveTo(0, (mPreLowY+mLowY)/2);
+                    mPath.lineTo(getWidth() / 2,mLowY);
 
-                mPath.moveTo(0,mLowY);
-                mPath.lineTo(getWidth()/2,y);
-                break;
+                    mPath.moveTo(getWidth() / 2, mHeightY);
+                    mPath.lineTo(getWidth(), (mHeightY + mNextHeightY) / 2);
+
+                    mPath.moveTo(getWidth() / 2, mLowY);
+                    mPath.lineTo(getWidth(), (mNextLowY + mLowY) / 2);
+
+
+
+
+
+                    break;
+                case sLASTITEM:
+                    mPath.moveTo(0, (mPreHeightY+mHeightY)/2);
+                    mPath.lineTo(getWidth() / 2, mHeightY);
+
+                    mPath.moveTo(0, (mPreLowY+mLowY)/2);
+                    mPath.lineTo(getWidth() / 2, mLowY);
+                    break;
                 default:
                     break;
-        }
+            }
 
-        canvas.drawPath(mPath, mPaint);
+            canvas.drawPath(mPath, mPaint);
+
 
     }
+    public void draws(int preHeightY,int preLowY,int heightY, int lowY,int itemType,boolean last) {
+        this.mPreHeightY = preHeightY;
+        this.mPreLowY = preLowY;
+        this.mHeightY = heightY;
+        this.mLowY = lowY;
+        this.mItemType  =itemType;
 
-    public void draws(int x,int y){
-        this.x = x;
-        this.y = y;
         invalidate();
     }
 
-    private void init(){
+    public void draws(int preHeightY,int preLowY,int heightY, int lowY, int nextHeighY, int nextLowY,int itemType) {
+        this.mPreHeightY = preHeightY;
+        this.mPreLowY = preLowY;
+        this.mHeightY = heightY;
+        this.mLowY = lowY;
+        this.mNextHeightY = nextHeighY;
+        this.mNextLowY = nextLowY;
+        this.mItemType  =itemType;
+
+        invalidate();
+    }
+
+    public void draws(int heightY, int lowY, int nextHeighY, int nextLowY,int itemType) {
+
+        this.mHeightY = heightY;
+        this.mLowY = lowY;
+        this.mNextHeightY = nextHeighY;
+        this.mNextLowY = nextLowY;
+        this.mItemType  =itemType;
+
+        invalidate();
+    }
+
+    private void init() {
         mPaint = new Paint();
         mPaint.setColor(Color.BLACK);
         mPaint.setAntiAlias(true);

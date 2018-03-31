@@ -17,6 +17,13 @@
         android:layout_width="match_parent"
         android:layout_height="400dp"
      />
+<!--<com.example.asus.diagram.HorizontalListView
+    android:id="@+id/rv_diagram"
+    android:layout_centerInParent="true"
+    android:layout_width="match_parent"
+    android:layout_height="400dp">-->
+
+<!--</com.example.asus.diagram.HorizontalListView>-->
     <View
         android:layout_below="@+id/rv_diagram"
         android:background="@color/colorDivider"
