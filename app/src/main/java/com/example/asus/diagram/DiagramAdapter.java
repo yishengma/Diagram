@@ -1,20 +1,11 @@
 package com.example.asus.diagram;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
+
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Map;
-
-/**
- * Created by asus on 18-3-30.
- */
 
 public class DiagramAdapter extends RecyclerView.Adapter<DiagramAdapter.ViewHolder> {
     private int[] mHeight;
@@ -36,9 +27,12 @@ public class DiagramAdapter extends RecyclerView.Adapter<DiagramAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        //设置RecyclerView 的这个holder 不复用
         holder.setIsRecyclable(false);
         int prePosition = position - 1;
         int nextPosition = position + 1;
+
+        //这里默认显示15天的数据
         switch (position) {
             case 0:
                 holder.mDiagramView.draws(times*mHeight[position], times*mLows[position], times*mHeight[nextPosition], times*mLows[nextPosition], 0);
@@ -75,6 +69,11 @@ public class DiagramAdapter extends RecyclerView.Adapter<DiagramAdapter.ViewHold
         }
 
     }
+
+    /**
+     * 为了让温差大小不同的曲线都能显示并且显示的效果不会相差太大
+     * 这里对数据进行了不同倍数的放大，差别大的放大倍数小，差别晓得放大倍数大
+     */
 
     private void caculateTimes(){
         int max =mHeight[0];
